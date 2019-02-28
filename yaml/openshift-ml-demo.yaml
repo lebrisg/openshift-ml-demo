@@ -102,11 +102,21 @@ objects:
           imagePullPolicy: IfNotPresent
           name: "${APPLICATION_NAME}"
           terminationMessagePath: /dev/termination-log
+          env:
+          - name: NVIDIA_VISIBLE_DEVICES
+            value: all
+          - name: NVIDIA_DRIVER_CAPABILITIES
+            value: "compute,utility"
+          - name: NVIDIA_REQUIRE_CUDA
+            value: "cuda>=5.0"
           ports:
-          -containerPort: 8080
+          - containerPort: 8080
           volumeMounts:
           - mountPath: /deepspeech
             name: "${APPLICATION_NAME}-model-data"
+          resources:
+            limits:
+              nvidia.com/gpu: 1 # requesting 1 GPU
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         volumes:
