@@ -5,8 +5,8 @@ LABEL ios.k8s.display-name="deepspeech" \
     maintainer="Keith Tenzer <ktenzer@redhat.com>"
 
 RUN dnf groupinstall -y 'C Development Tools and Libraries'
-RUN dnf install -y python2 \
-    python2-devel \
+RUN dnf install -y python3 \
+    python3-devel \
     git \
     wget \
     swig \
@@ -21,7 +21,7 @@ RUN npm -v
 
 RUN mkdir -p /tmp/deepspeech
 
-RUN pip2 install 'deepspeech==0.3.0' \
+RUN pip3 install 'deepspeech-gpu==0.3.0' \
     jamspell \
     webrtcvad \
     requests \
@@ -33,7 +33,7 @@ RUN pip2 install 'deepspeech==0.3.0' \
 RUN cd /tmp/deepspeech && \
     git clone https://github.com/BoseCorp/py-googletrans.git && \
     cd /tmp/deepspeech/py-googletrans && \
-    python2 /tmp/deepspeech/py-googletrans/setup.py install && \
+    python3 /tmp/deepspeech/py-googletrans/setup.py install && \
     rm -rf /tmp/deepspeech
 
 RUN mkdir /app
@@ -52,7 +52,7 @@ RUN chown -R 1001:0 /app && \
 
 RUN chmod -R 777 /tmp
 
-RUN echo "3.0" > /etc/imageversion
+RUN echo "4.0" > /etc/imageversion
 
 USER 1001
 
